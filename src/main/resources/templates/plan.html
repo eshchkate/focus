@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Focus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/template">Template</a>
+                <a class="nav-link" href="/task">Task</a>
+                <a class="nav-link" href="/user">User</a>
+                <a class="nav-link" href="/legend">Legend</a>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" class="btn btn-light" value="Sign Out"/>
+    </form>
+</nav>
+
+<body>
+
+<div class="container mt-5 mb-5">
+    <a class="btn btn-primary" href="/newplan" role="button">Create plan</a>
+
+    <section class="AllActualInformation">
+        <div th:each="el : ${plans}" class="list-group">
+            <a th:href="@{/plan/{id}(id=${el.planID})}" class="list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 th:text="${el.getPlanName()}" class="mb-1"></h4>
+                    <div class="p-2 bd-highlight">
+                        <p th:text="${el.getActionData()}"></p>
+                        <p th:text="${el.getLocation()}"></p>
+                    </div>
+                </div>
+                <div th:each="ell : ${el.templates}" class="list-group">
+                    <h6 th:text="${ell.getTemplateName()}"></h6>
+                    <div th:each="elll : ${ell.tasks}" class="list-group">
+                        <p th:text="${elll.getTaskName()}"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+</body>
+
+</html>

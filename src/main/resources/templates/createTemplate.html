@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Focus</a>
@@ -11,13 +10,6 @@
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" href="/plan">Plan</a>
-                    <a class="nav-link" href="/user">User</a>
-                    <a class="nav-link" href="/legend">Legend</a>
-                </div>
-            </div>
         </div>
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-light" value="Sign Out"/>
@@ -25,7 +17,7 @@
     </nav>
 </head>
 <body>
-
+<p th:text="'creating templates'"/>
 </body>
 
 </html>

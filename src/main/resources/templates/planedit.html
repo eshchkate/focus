@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Focus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="/plan">Plan</a>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" class="btn btn-light" value="Sign Out"/>
+        </form>
+    </nav>
+</head>
+<body>
+
+<div class="container mt-5 mb-5">
+    <h3>Change the plan</h3>
+    <form th:action="@{/plan/{id}(id=${plan.planID})}" method="post" >
+        <div class="mb-3 form-check">
+            <label class="form-label">New plan name</label>
+            <input class="form-control" type="text" name="planName"  th:value="${plan.planName}"/><br>
+            <div id="planNameHelpBlock" class="form-text">
+                Enter the name of the plan.
+            </div>
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-label">New date action</label>
+            <input class="form-control" type="datetime-local" name="actionData" th:value="${plan.actionData}"/><br>
+            <div id="actionDataHelpBlock" class="form-text">
+                Enter the date of the plan.
+            </div>
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-label">New location action</label>
+            <input class="form-control" type="text" name="location" th:value="${plan.location}"/><br>
+            <div id="locationHelpBlock" class="form-text">
+                Enter the location of the plan.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+
+</html>

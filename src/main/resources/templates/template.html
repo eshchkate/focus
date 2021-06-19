@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Focus</a>
@@ -13,9 +12,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="/plan">Plan</a>
+                    <a class="nav-link" href="/task">Task</a>
                     <a class="nav-link" href="/user">User</a>
-                    <a class="nav-link" href="/legend">Legend</a>
                 </div>
             </div>
         </div>
@@ -25,7 +23,20 @@
     </nav>
 </head>
 <body>
+<div class="container mt-5 mb-5">
+    <a class="btn btn-primary" href="/newtemplate" role="button">Create template</a>
 
+    <section class="AllActualInformation">
+        <div th:each="el : ${templates}" class="list-group">
+            <a th:href="@{/template/{id}(id=${el.templateID})}" class="list-group-item list-group-item-action"
+               aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <p th:text="${el.getTemplateName()}"></p>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
 </body>
 
 </html>
