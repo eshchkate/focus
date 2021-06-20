@@ -14,6 +14,11 @@ public class Template {
     public Template() {
     }
 
+    public Template(String templateName, Plan plan) {
+        this.templateName = templateName;
+        this.plan = plan;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "template_id")

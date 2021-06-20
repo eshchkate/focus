@@ -18,6 +18,15 @@ public class Task {
     public Task() {
     }
 
+    public Task(String taskName, LocalDateTime timeStart, LocalDateTime timeStop, String description, String place, Template template) {
+        this.taskName = taskName;
+        this.timeStart = timeStart;
+        this.timeStop = timeStop;
+        this.description = description;
+        this.place = place;
+        this.template = template;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "task_id")

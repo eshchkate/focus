@@ -25,30 +25,31 @@
 
 <div class="container mt-5 mb-5">
     <h3>Change the plan</h3>
-    <form th:action="@{/plan/{id}(id=${plan.planID})}" method="post" >
-        <div class="mb-3 form-check">
-            <label class="form-label">New plan name</label>
-            <input class="form-control" type="text" name="planName"  th:value="${plan.planName}"/><br>
-            <div id="planNameHelpBlock" class="form-text">
-                Enter the name of the plan.
-            </div>
-        </div>
-        <div class="mb-3 form-check">
-            <label class="form-label">New date action</label>
-            <input class="form-control" type="datetime-local" name="actionData" th:value="${plan.actionData}"/><br>
-            <div id="actionDataHelpBlock" class="form-text">
-                Enter the date of the plan.
-            </div>
-        </div>
-        <div class="mb-3 form-check">
-            <label class="form-label">New location action</label>
-            <input class="form-control" type="text" name="location" th:value="${plan.location}"/><br>
-            <div id="locationHelpBlock" class="form-text">
-                Enter the location of the plan.
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <form th:action="@{/plan/{id}(id=${plan.planID})}" method="post">
+        <input class="form-control" type="text" name="planName" th:value="${plan.planName}"/><br>
+        <input class="form-control" type="datetime-local" name="actionData" th:value="${plan.actionData}"/><br>
+        <input class="form-control" type="text" name="location" th:value="${plan.location}"/><br>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
+    <section class="AllActualInformation">
+        <div th:each="el : ${templates}" class="list-group">
+            <a th:href="@{/template/{id}(id=${el.templateID})}" class="list-group-item list-group-item-action"
+               aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 th:text="${el.templateName}"></h4>
+                </div>
+                <div th:each="ell : ${el.getTasks()}" class="list-group">
+                    <h5 th:text="${ell.taskName}"></h5>
+                    <div class="list-group">
+                        <p th:text="${ell.timeStart}"></p>
+                        <p th:text="${ell.timeStop}"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </section>
+    <a class="btn btn-primary" th:href="@{newtemplate/{id}(id=${plan.planID})}" role="button">Add template</a>
 </div>
 </body>
 

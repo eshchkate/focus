@@ -1,6 +1,7 @@
 package com.mpi.focus.controllers;
 
 import com.mpi.focus.models.Plan;
+import com.mpi.focus.models.Template;
 import com.mpi.focus.repos.PlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,8 +49,12 @@ public class PlanController {
     }
 
     @GetMapping("/plan/{plan}")
-    public String planEdit(@PathVariable Plan plan, Model model) {
+    public String planEdit(@PathVariable(value = "plan") Long id,
+                           Model model) {
+        Plan plan = planRepository.getById(id);
+        List<Template> templates = plan.getTemplates();
         model.addAttribute("plan", plan);
+        model.addAttribute("templates", templates);
         return "planedit";
     }
 

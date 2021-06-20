@@ -18,22 +18,16 @@
 </head>
 <body>
 <div class="container mt-5 mb-5">
-    <form th:action="@{{id}(id=${plan.planID})}" method="post" >
-        <h5>Creating an operation template</h5>
-            <input class="form-control" type="text" name="templateName" placeholder="Enter the name of the template."/><br>
-        <button type="submit" class="btn btn-primary">Save template</button>
-    </form>
-    <section class="AllActualInformation">
-        <div th:each="el : ${plan.templates}" class="list-group">
-            <a th:href="@{/template/{id}(id=${el.templateID})}" class="list-group-item list-group-item-action"
-               aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <p th:text="${el.templateName}"></p>
-                </div>
-            </a>
-        </div>
+    <form th:action="@{{id}(id=${template.templateID})}" method="post" >
+        <h5>Creating an operation task</h5>
 
-    </section>
+        <input class="form-control" type="text" name="taskName"   placeholder="Enter the name of the task."/><br>
+        <input class="form-control" type="datetime-local"name="timeStart"   placeholder="Enter the tine start."/><br>
+        <input class="form-control" type="datetime-local" name="timeStop"  placeholder="Enter the time end."/><br>
+        <input class="form-control" type="text" name="description"   placeholder="Enter the description."/><br>
+        <input class="form-control" type="text" name="place"  placeholder="Enter the name of the place."/><br>
+        <button type="submit" class="btn btn-primary">Save task</button>
+    </form>
 </div>
 </body>
 
