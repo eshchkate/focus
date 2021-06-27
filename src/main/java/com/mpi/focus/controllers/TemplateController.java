@@ -5,7 +5,6 @@ import com.mpi.focus.models.Template;
 import com.mpi.focus.repos.PlanRepository;
 import com.mpi.focus.repos.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -45,7 +43,7 @@ public class TemplateController {
     @PostMapping("/plan/newtemplate/{plan}")
     public String templateCreate(@PathVariable(value = "plan") Long id,
                                  @RequestParam String templateName
-                               ) {
+    ) {
         Plan plan = planRepository.getById(id);
         Template template = new Template(templateName, plan);
         templateRepository.save(template);
@@ -71,4 +69,37 @@ public class TemplateController {
         return "redirect:/template/{template}";
     }
 
+    @GetMapping("/newtemplate")
+    public String templateNew(Model model) {
+        model.addAttribute("template", templateRepository.findAll());
+        return "newtemplate";
+    }
+
+    @PostMapping("/newtemplate")
+    public String templateFormNew(@RequestParam String templateName) {
+        Template template = new Template(templateName);
+        template.setTemplateName(templateName);
+        templateRepository.save(template);
+        return "redirect:/template";
+    }
 }
+/*
+    @PostMapping("/template/{template}")
+    public String planEditForm(@PathVariable(value = "template") Long id,
+                               @RequestParam String templateName) {
+        Template template = templateRepository.getById(id);
+        template.setTemplateName(templateName);
+        templateRepository.save(template);
+
+        return "redirect:/template/{template}";
+    }
+
+
+    @GetMapping("delete/template/{template}")
+    public String deleteTemplate(@PathVariable("template") long templateID, Model model) {
+        Template template = templateRepository.getById(templateID);
+        Long planID = template.getPlan().getPlanID();
+        templateRepository.delete(template);
+        return "redirect:/plan/" + planID + "/";
+    }*/
+

@@ -2,10 +2,13 @@ package com.mpi.focus.controllers;
 
 import com.mpi.focus.models.Task;
 import com.mpi.focus.models.Template;
+import com.mpi.focus.models.User;
 import com.mpi.focus.repos.TaskRepository;
 import com.mpi.focus.repos.TemplateRepository;
+import com.mpi.focus.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +28,15 @@ public class TaskController {
     @Autowired
     private TemplateRepository templateRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/task")
-    public String home(Model model) {
-        model.addAttribute("title", "task");
+    public String home(@AuthenticationPrincipal User specialist,
+                       Model model) {
+        List<Task> tasks = taskRepository.findAll();
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("specialist", specialist);
         return "task";
     }
 
@@ -35,7 +44,11 @@ public class TaskController {
     public String taskEdit(@PathVariable(value = "task") Long id,
                            Model model) {
         Task task = taskRepository.getById(id);
+
+        //List<User> users = userRepository.findAll();
+        //  User user = userRepository.getById(2L);
         model.addAttribute(task);
+        //  model.addAttribute(users);
         return "taskedit";
     }
 
@@ -45,15 +58,19 @@ public class TaskController {
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeStart,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeStop,
                                @RequestParam String description,
-                               @RequestParam String place
+                               @RequestParam String place,
+                               @RequestParam String specialist
     ) {
         Task task = taskRepository.getById(id);
+        User user = userRepository.findByUsername(specialist);
         task.setTaskName(taskName);
         task.setTimeStart(timeStart);
         task.setTimeStop(timeStop);
         task.setDescription(description);
         task.setPlace(place);
+        task.setSpecialist(user);
         taskRepository.save(task);
+
         return "redirect:/task/{task}";
     }
 
@@ -73,11 +90,33 @@ public class TaskController {
                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeStart,
                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeStop,
                              @RequestParam String description,
-                             @RequestParam String place
+                             @RequestParam String place,
+                             @RequestParam String specialist
     ) {
         Template template = templateRepository.getById(id);
-        Task task = new Task(taskName, timeStart, timeStop, description, place, template);
+        User user = userRepository.findByUsername(specialist);
+        Long UserID = user.getUserID();
+        Task task = new Task(taskName, timeStart, timeStop, description, place, template, user);
         taskRepository.save(task);
-        return "redirect:/template/newtask/{template}";
+        return "redirect:/template/{template}";
     }
+/*
+    @PostMapping("task/delete/{task}")
+    public String deleteTask(@PathVariable("task") long taskID, Model model) {
+    //    Task task = taskRepository.getById(taskID);
+       // Long templateID = task.getTemplate().getTemplateID();
+        taskRepository.deleteById(taskID);
+      //  taskRepository.delete(task);
+        return "redirect:/plan";
+    }*/
+
+    @GetMapping("task/delete/{task}")
+    public String deletTask(@PathVariable("task") long taskID, Model model) {
+        Task task = taskRepository.getById(taskID);
+        // Long templateID = task.getTemplate().getTemplateID();
+        taskRepository.deleteById(taskID);
+        //  taskRepository.delete(task);
+        return "redirect:/plan";
+    }
+
 }

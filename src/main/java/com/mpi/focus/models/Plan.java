@@ -22,7 +22,7 @@ public class Plan {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "plan_id",  updatable = false)
     private Long planID;
 
@@ -35,8 +35,10 @@ public class Plan {
 
     private String location;
 
-   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plan", fetch = FetchType.EAGER)
+    @OneToMany(cascade = {
+        CascadeType.ALL
+
+    }, mappedBy = "plan", fetch = FetchType.EAGER)
     private List<Template> templates;
 
 }

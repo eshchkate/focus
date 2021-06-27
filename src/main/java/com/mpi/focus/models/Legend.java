@@ -17,8 +17,16 @@ public class Legend {
         this.purpose = purpose;
     }
 
+    public Legend(User specialist, String fakeName, String story, String purpose, String status) {
+        this.specialist = specialist;
+        this.fakeName = fakeName;
+        this.story = story;
+        this.purpose = purpose;
+        this.status = status;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "legend_id", updatable = false)
     private Long legendID;
 
@@ -33,6 +41,8 @@ public class Legend {
     private String story;
 
     private String purpose;
+
+    private String status;
 
 
 }

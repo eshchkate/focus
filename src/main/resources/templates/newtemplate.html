@@ -21,8 +21,8 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link" href="/plan">Планы</a>
-                    <a class="nav-link" href="/template">Шаблоны</a>
-                    <a class="nav-link" href="/task" style="text-decoration: underline">Задачи</a>
+                    <a class="nav-link" href="/template" style="text-decoration: underline">Шаблоны</a>
+                    <a class="nav-link" href="/task">Задачи</a>
                     <a class="nav-link" href="/user">Пользователи</a>
                     <a class="nav-link" href="/legend">Легенды</a>
                 </div>
@@ -35,16 +35,10 @@
 </head>
 <body>
 <div class="container mt-5 mb-5">
-    <form th:action="@{{id}(id=${template.templateID})}" method="post" >
-        <h5>Создание задачи</h5>
-
-        <input class="form-control" type="text" name="taskName"   placeholder="Введите название задачи"/><br>
-        <input class="form-control" type="datetime-local"name="timeStart"   placeholder="Введите время начала"/><br>
-        <input class="form-control" type="datetime-local" name="timeStop"  placeholder="Введите время завершения"/><br>
-        <input class="form-control" type="text" name="description"   placeholder="Введите описание"/><br>
-        <input class="form-control" type="text" name="place"  placeholder="Введите место действия"/><br>
-        <input class="form-control" type="text" name="specialist"  placeholder="Введите имя исполнителя"/><br>
-        <button type="submit" class="btn btn-secondary" style="margin-bottom: 10px">Сохранить</button>
+    <form action="/newtemplate" method="post" >
+        <h5>Создание шаблона</h5>
+        <input class="form-control" type="text" name="templateName" placeholder="Введите название шаблона"/><br>
+        <button type="submit" class="btn btn-secondary" style="margin-bottom: 10px">Сохранить шаблон</button>
     </form>
 </div>
 </body>

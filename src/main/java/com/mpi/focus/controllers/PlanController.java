@@ -51,8 +51,10 @@ public class PlanController {
     @GetMapping("/plan/{plan}")
     public String planEdit(@PathVariable(value = "plan") Long id,
                            Model model) {
+        List<Plan> plans = planRepository.findAll();
         Plan plan = planRepository.getById(id);
         List<Template> templates = plan.getTemplates();
+        model.addAttribute("plans", plans);
         model.addAttribute("plan", plan);
         model.addAttribute("templates", templates);
         return "planedit";

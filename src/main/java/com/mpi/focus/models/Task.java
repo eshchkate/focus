@@ -27,8 +27,20 @@ public class Task {
         this.template = template;
     }
 
+    public Task(String taskName, LocalDateTime timeStart, LocalDateTime timeStop, String description, String place, Template template, User specialist) {
+        this.taskName = taskName;
+        this.timeStart = timeStart;
+        this.timeStop = timeStop;
+        this.description = description;
+        this.place = place;
+        this.template = template;
+        this.specialist = specialist;
+    }
+
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private Long taskID;
 
@@ -48,7 +60,12 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "template_id")
     private Template template;
+/*
+    @ManyToMany(cascade = {CascadeType.ALL
+    }, mappedBy = "tasks", fetch = FetchType.EAGER)
+    private List<User> users;*/
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tasks", fetch = FetchType.EAGER)
-    private List<User> users;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User specialist;
 }

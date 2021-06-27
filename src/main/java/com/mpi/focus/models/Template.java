@@ -14,24 +14,32 @@ public class Template {
     public Template() {
     }
 
+    public Template(String templateName) {
+        this.templateName = templateName;
+    }
+
     public Template(String templateName, Plan plan) {
         this.templateName = templateName;
         this.plan = plan;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "template_id")
     private Long templateID;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = {
+            CascadeType.MERGE,CascadeType.PERSIST,
+
+    })
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
     @Column(name = "template_name")
     private String templateName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "template", fetch = FetchType.EAGER)
-    //private Set<Task> tasks = new HashSet<Task>();
+    @OneToMany(cascade = {
+           CascadeType.ALL
+    }, mappedBy = "template", fetch = FetchType.EAGER)
     private List<Task> tasks;
 }

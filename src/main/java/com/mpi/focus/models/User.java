@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,7 +25,7 @@ public class User implements UserDetails {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false)
     private Long userID;
 
@@ -41,7 +42,7 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<Role>();
-
+/*
     @ManyToMany
     @JoinTable(
             name = "user_task",
@@ -49,6 +50,7 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "task_id")}
     )
     private Set<Task> tasks = new HashSet<Task>();
+*/
 
 
     @Override
